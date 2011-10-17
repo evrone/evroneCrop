@@ -9,7 +9,8 @@
         preview: false,
         ratio: false,
         setSelect: false,
-        store: 'evroneCrop'
+        store: 'evroneCrop',
+        size: false
       };
       settings = $.extend(settings, options);
       return this.each(function() {
@@ -314,9 +315,9 @@
       xywh.y *= m;
       xywh.w *= m;
       xywh.h *= m;
-      tmp_canvas.width = 150;
-      tmp_canvas.height = 150;
-      ctx.drawImage(image, xywh.x, xywh.y, xywh.w, xywh.h, 0, 0, 150, 150);
+      tmp_canvas.width = this.settings.size.w || xywh.w;
+      tmp_canvas.height = this.settings.size.h || xywh.h;
+      ctx.drawImage(image, xywh.x, xywh.y, xywh.w, xywh.h, 0, 0, tmp_canvas.width, tmp_canvas.height);
       return tmp_canvas.toDataURL();
     };
     evroneCrop.prototype.store = function() {

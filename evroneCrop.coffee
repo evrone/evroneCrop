@@ -7,7 +7,9 @@ $.fn.extend
       ratio: false #pass a number > 0 to fix ratio, e.g 1 for square or 16/9 for 16/9 ratio
       setSelect: false #pass coordinates for setting select after initializing, e.g {x: 0, y: 0, w: 100, h: 100} or "center"
       #dont pass h if you have ratio enabled
-      store: 'evroneCrop'
+      store: 'evroneCrop' #variable for storing cropped data(in original image data attribute)
+      size: false
+      
     
     settings = $.extend settings, options
     
@@ -253,9 +255,9 @@ class evroneCrop
     xywh.w *= m
     xywh.h *= m
 
-    tmp_canvas.width = 150
-    tmp_canvas.height = 150
-    ctx.drawImage(image, xywh.x, xywh.y, xywh.w, xywh.h, 0, 0, 150, 150)
+    tmp_canvas.width = @settings.size.w or xywh.w
+    tmp_canvas.height = @settings.size.h or xywh.h
+    ctx.drawImage(image, xywh.x, xywh.y, xywh.w, xywh.h, 0, 0, tmp_canvas.width, tmp_canvas.height)
     tmp_canvas.toDataURL()
     
   store: ->
