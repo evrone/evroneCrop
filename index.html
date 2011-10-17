@@ -18,9 +18,21 @@
       width: 800px;
     }
     .images {
-      text-align: center;
+      text-align: left;
     }
-    #demo_image {
+    #demo1 {
+      width: 590px;
+      margin-right: 30px;
+    }
+    #preview1 {
+      width: 150px;
+      height: 150px;
+      vertical-align: top;
+      -webkit-box-shadow: #666 0px 2px 3px;
+      -moz-box-shadow: #666 0px 2px 3px;
+      box-shadow: #666 0px 2px 3px;
+    }
+    #demo2 {
       width: 790px;
     }
     
@@ -41,10 +53,13 @@
   <script type="text/javascript" charset="utf-8" src="evroneCrop.js"></script>
   <script type="text/javascript" charset="utf-8">
     $( function() {
-      crop = $('#demo_image').evroneCrop({
-        ratio: 1,
-        setSelect: false,
-        preview: '#preview'
+      demo1 = $('#demo1').evroneCrop({
+        preview: '#preview1'
+      });
+      
+      demo2 = $('#demo2').evroneCrop({
+        setSelect: 'center',
+        ratio: 1
       });
     });
   </script>
@@ -72,10 +87,17 @@
 <p>This is a JavaScript crop plugin, based on canvas and written with CoffeeScript. Crop is done completely on client side, the result of crop is a base64 string, that you could easily send to server.
 <br/>      </p>
 <h2>Demo</h2>
+<p>Usage without any settings but preview</p>
 <div class="images">
-  <img src="img1.jpg" alt="Image" id="demo_image" />
+  <img src="img1.jpg" alt="Image" id="demo1" />
+  <img id="preview1" />
 </div>
-<img id="preview" />
+
+<p>Fixed square ratio with default selection in center</p>
+<div class="images">
+  <img src="img1.jpg" alt="Image" id="demo2" />
+</div>
+
 <p>Arseny Zarechnev (cyanidesign@gmail.com), Evrone.com
 <br/>      </p>
 
