@@ -115,8 +115,9 @@ class evroneCrop
       
       dragMouseMove = (e) =>
         coords = { x: e.pageX - @canvas.offset().left, y: e.pageY - @canvas.offset().top }
+        return false if coords.x < 1 or coords.y < 1 or coords.x > @canvas.width()-1 or coords.y > @canvas.height-1
         @moveW = coords.x - @initX
-        @moveH = coords.y - @initY
+        if @settings.ratio then @moveH = @moveW*@settings.ratio else @moveH = coords.y - @initY
         @selection = new Rect @initX, @initY, @moveW, @moveH, 3
         @updateCanvas @initX, @initY, @moveW, @moveH, @canvas, @ctx
         
