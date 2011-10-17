@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>evroneCrop Demo</title>
+    <style type="text/css" media="screen">
+      body {
+        margin: 0;
+        padding: 0;
+        background: #eee;
+        font-family: Helvetica, Arial, sans-serif;
+        color: #333;
+        font-size: 14px/20px;
+      }
+      img {
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+      a {
+        margin: 0;
+        border: 0;
+      }
+      
+      #wrapper {
+        width: 960px;
+        margin: 0 auto;
+        padding: 20px 10px;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+      }
+      
+      #wrapper .heading {
+        text-align: center;
+      }
+      .images {
+        text-align: center;
+      }
+    </style>
+    <script type="text/javascript" charset="utf-8" src="jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="evroneCrop.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      $( function() {
+        crop = $('#test1').evroneCrop({
+          ratio: false,
+          setSelect: false,
+          preview: '#preview'
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1 class="heading">evroneCrop Demo</h1>
+      <div class="images">
+        <img src="img1.jpg" alt="Image" id="test1" />
+      </div>
+      <img id="preview" />
+    </div>
+  </body>
+</html>
