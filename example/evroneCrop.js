@@ -135,8 +135,15 @@
             x: e.pageX - this.canvas.offset().left,
             y: e.pageY - this.canvas.offset().top
           };
+          if (coords.x < 1 || coords.y < 1 || coords.x > this.canvas.width() - 1 || coords.y > this.canvas.height - 1) {
+            return false;
+          }
           this.moveW = coords.x - this.initX;
-          this.moveH = coords.y - this.initY;
+          if (this.settings.ratio) {
+            this.moveH = this.moveW * this.settings.ratio;
+          } else {
+            this.moveH = coords.y - this.initY;
+          }
           this.selection = new Rect(this.initX, this.initY, this.moveW, this.moveH, 3);
           return this.updateCanvas(this.initX, this.initY, this.moveW, this.moveH, this.canvas, this.ctx);
         }, this);
