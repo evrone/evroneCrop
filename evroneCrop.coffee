@@ -7,7 +7,6 @@ $.fn.extend
       ratio: false #pass a number > 0 to fix ratio, e.g 1 for square or 16/9 for 16/9 ratio
       setSelect: false #pass coordinates for setting select after initializing, e.g {x: 0, y: 0, w: 100, h: 100} or "center"
       #dont pass h if you have ratio enabled
-      store: 'evroneCrop' #variable for storing cropped data(in original image data attribute)
       size: false
       
     
@@ -261,7 +260,7 @@ class evroneCrop
     tmp_canvas.toDataURL()
     
   store: ->
-    $.data(@element, @storePlace, @done())
+    $.data(@element, 'evroneCrop', @done())
     
       
 class Rect

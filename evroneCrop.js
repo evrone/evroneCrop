@@ -9,7 +9,6 @@
         preview: false,
         ratio: false,
         setSelect: false,
-        store: 'evroneCrop',
         size: false
       };
       settings = $.extend(settings, options);
@@ -321,7 +320,7 @@
       return tmp_canvas.toDataURL();
     };
     evroneCrop.prototype.store = function() {
-      return $.data(this.element, this.storePlace, this.done());
+      return $.data(this.element, 'evroneCrop', this.done());
     };
     return evroneCrop;
   })();
