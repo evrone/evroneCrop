@@ -8,26 +8,42 @@
   <style type="text/css">
     body {
       margin-top: 1.0em;
-      background-color: #513f01;
+      background-color: #eee;
       font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
+      color: #333;
+      padding: 20px 10px;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
     }
     #container {
       margin: 0 auto;
       width: 700px;
     }
-    h1 { font-size: 3.8em; color: #aec0fe; margin-bottom: 3px; }
+    h1 { font-size: 3.8em; margin-bottom: 3px; }
     h1 .small { font-size: 0.4em; }
     h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #aec0fe; }
-    h3 { text-align: center; color: #aec0fe; }
-    a { color: #aec0fe; }
+    h2 { font-size: 1.5em; }
+    h3 { text-align: center; }
+    a { color: #3366dd; }
     .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
     .download { float: right; }
     pre { background: #000; color: #fff; padding: 15px;}
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
   </style>
+  
+  <script type="text/javascript" charset="utf-8" src="jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="evroneCrop.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $( function() {
+      crop = $('#demo_image').evroneCrop({
+        ratio: 1,
+        setSelect: false,
+        preview: '#preview'
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -49,22 +65,17 @@
       JS crop tool based on canvas
     </div>
 
-    <h2>Authors</h2>
-<p>Arseny Zarechnev (cyanidesign@gmail.com)<br/>      </p>
-<h2>Contact</h2>
-<p>Arseny Zarechnev (cyanidesign@gmail.com)<br/>      </p>
+<p>This is a JavaScript crop plugin, based on canvas and written with CoffeeScript. Crop is done completely on client side, the result of crop is a base64 string, that you could easily send to server.
+<br/>      </p>
+<h2>Demo</h2>
+<div class="images">
+  <img src="img1.jpg" alt="Image" id="demo_image" />
+</div>
+<img id="preview" />
+<p>Arseny Zarechnev (cyanidesign@gmail.com), Evrone.com
+<br/>      </p>
 
 
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/evindor/evroneCrop/zipball/master">zip</a> or
-      <a href="http://github.com/evindor/evroneCrop/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/evindor/evroneCrop</pre>
-    </p>
 
     <div class="footer">
       get the source code on GitHub : <a href="http://github.com/evindor/evroneCrop">evindor/evroneCrop</a>
