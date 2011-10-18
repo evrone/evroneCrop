@@ -13,9 +13,7 @@
       };
       settings = $.extend(settings, options);
       return this.each(function() {
-        return this.onload = function() {
-          return new evroneCrop(this, settings);
-        };
+        return new evroneCrop(this, settings);
       });
     }
   });
@@ -170,9 +168,7 @@
       if (this.settings.preview) {
         $(this.settings.preview).attr('src', this.done());
       }
-      console.time('done');
-      window[this.store] = this.done();
-      return console.timeEnd('done');
+      return window[this.store] = this.done();
     };
     evroneCrop.prototype.createCorners = function() {
       var c, ctx, point, r, _i, _len, _ref, _results;
@@ -349,9 +345,25 @@
       this.newSummits = [];
     }
     Rect.prototype.hasPoint = function(x, y) {
-      var padding;
+      var max_x, max_y, min_x, min_y, padding, point1, point2;
       padding = this.padding || 0;
-      if (x > (this.summits[0].x + padding) && x < (this.summits[2].x - padding) && y > (this.summits[0].y + padding) && y < (this.summits[2].y - padding)) {
+      point1 = this.summits[0];
+      point2 = this.summits[2];
+      if (point1.x < point2.x) {
+        min_x = point1.x;
+        max_x = point2.x;
+      } else {
+        min_x = point2.x;
+        max_x = point1.x;
+      }
+      if (point1.y < point2.y) {
+        min_y = point1.y;
+        max_y = point2.y;
+      } else {
+        min_y = point2.y;
+        max_y = point1.y;
+      }
+      if (x > (min_x + padding) && x < (max_x - padding) && y > (min_y + padding) && y < (max_y - padding)) {
         return true;
       } else {
         return false;

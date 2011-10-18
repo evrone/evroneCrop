@@ -13,8 +13,7 @@ $.fn.extend
     settings = $.extend settings, options
     
     return @each () ->
-      @onload = ->
-        new evroneCrop this, settings
+      new evroneCrop this, settings
 
 class evroneCrop
   constructor: (@element, @settings) ->
@@ -143,9 +142,9 @@ class evroneCrop
     if @settings.preview
       $(@settings.preview).attr('src', @done())
     
-    console.time('done')
+    #console.time('done')
     window[@store] = @done()
-    console.timeEnd('done')
+    #console.timeEnd('done')
       
     
   createCorners: ->
@@ -273,10 +272,25 @@ class Rect
     
   hasPoint: (x, y) ->
     padding = @padding or 0
-    if x > (@summits[0].x + padding) and x < (@summits[2].x - padding) and y > (@summits[0].y + padding) and y < (@summits[2].y - padding)
+    point1 = @summits[0]
+    point2 = @summits[2]
+    if point1.x < point2.x
+      min_x = point1.x
+      max_x = point2.x
+    else
+      min_x = point2.x
+      max_x = point1.x
+    if point1.y < point2.y
+      min_y = point1.y
+      max_y = point2.y
+    else
+      min_y = point2.y
+      max_y = point1.y
+    if x > (min_x + padding) and x < (max_x - padding) and y > (min_y + padding) and y < (max_y - padding)
       true
     else
       false
+      
       
   translate: (i, x, y) ->
     oldSummits = @summits
