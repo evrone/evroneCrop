@@ -23,6 +23,7 @@
       this.element = element;
       this.settings = settings;
       this.canvas = this.constructCanvas();
+      G_vmlCanvasManager.initElement(this.canvas[0]);
       this.ctx = this.setCanvas();
       this.storePlace = this.settings.store;
       tmp_img = new Image();
@@ -301,6 +302,7 @@
     evroneCrop.prototype.done = function() {
       var ctx, image, imageCSSW, m, tmp_canvas, xywh;
       tmp_canvas = document.createElement('canvas');
+      G_vmlCanvasManager.initElement(tmp_canvas);
       image = this.element;
       imageCSSW = $(image).width();
       m = this.originalSize / imageCSSW;
