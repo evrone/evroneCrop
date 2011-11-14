@@ -245,10 +245,13 @@ class evroneCrop
       
   done: ->
     tmp_canvas = document.createElement 'canvas'
+    if typeof(window.G_vmlCanvasManager) != 'undefined' 
+        window.G_vmlCanvasManager.initElement(tmp_canvas);
     image = @element
     imageCSSW = $(image).width()
     m = @originalSize/imageCSSW
-    ctx = tmp_canvas.getContext '2d'
+    if tmp_canvas.getContext
+      ctx = tmp_canvas.getContext '2d'
     xywh = @selection.xywh()
 
     xywh.x *= m
