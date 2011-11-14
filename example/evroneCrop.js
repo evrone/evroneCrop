@@ -58,20 +58,20 @@
       }, this));
     }
     evroneCrop.prototype.constructCanvas = function() {
-      return $(this.element).after('<canvas class="evroneCropCanvas" style="position: absolute;"></canvas>').next();
+      var c, canvas;
+      canvas = document.createElement('canvas');
+      c = $(canvas);
+      c.css('position', 'absolute');
+      c.addClass('evroneCropCanvas');
+      return $(this.element).after(c).next();
     };
     evroneCrop.prototype.setCanvas = function() {
       var c;
       this.canvas.offset($(this.element).offset());
       c = this.canvas[0];
-      if (typeof window.G_vmlCanvasManager !== 'undefined') {
-        window.G_vmlCanvasManager.initElement(c);
-      }
       c.width = this.element.width;
       c.height = this.element.height;
-      if (c.getContext) {
-        return c.getContext('2d');
-      }
+      return c.getContext('2d');
     };
     evroneCrop.prototype.darkenCanvas = function() {
       var c;

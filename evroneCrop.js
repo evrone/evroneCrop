@@ -60,9 +60,6 @@
     evroneCrop.prototype.constructCanvas = function() {
       var c, canvas;
       canvas = document.createElement('canvas');
-      if (typeof window.G_vmlCanvasManager !== 'undefined') {
-        window.G_vmlCanvasManager.initElement(canvas);
-      }
       c = $(canvas);
       c.css('position', 'absolute');
       c.addClass('evroneCropCanvas');
@@ -74,9 +71,7 @@
       c = this.canvas[0];
       c.width = this.element.width;
       c.height = this.element.height;
-      if (c.getContext) {
-        return c.getContext('2d');
-      }
+      return c.getContext('2d');
     };
     evroneCrop.prototype.darkenCanvas = function() {
       var c;
@@ -311,15 +306,10 @@
     evroneCrop.prototype.done = function() {
       var ctx, image, imageCSSW, m, tmp_canvas, xywh;
       tmp_canvas = document.createElement('canvas');
-      if (typeof window.G_vmlCanvasManager !== 'undefined') {
-        window.G_vmlCanvasManager.initElement(tmp_canvas);
-      }
       image = this.element;
       imageCSSW = $(image).width();
       m = this.originalSize / imageCSSW;
-      if (tmp_canvas.getContext) {
-        ctx = tmp_canvas.getContext('2d');
-      }
+      ctx = tmp_canvas.getContext('2d');
       xywh = this.selection.xywh();
       xywh.x *= m;
       xywh.y *= m;

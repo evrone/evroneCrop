@@ -50,8 +50,8 @@ class evroneCrop
     
   constructCanvas: ->
     canvas = document.createElement('canvas')
-    if typeof(window.G_vmlCanvasManager) != 'undefined' 
-      window.G_vmlCanvasManager.initElement(canvas);
+    #if typeof(window.G_vmlCanvasManager) != 'undefined' 
+    #  window.G_vmlCanvasManager.initElement(canvas);
     c = $(canvas)
     c.css('position', 'absolute')
     c.addClass 'evroneCropCanvas'
@@ -62,8 +62,8 @@ class evroneCrop
      c = @canvas[0]
      c.width = @element.width
      c.height = @element.height
-     if c.getContext
-       c.getContext('2d') #return canvas context
+     #if c.getContext
+     c.getContext('2d') #return canvas context
      
   darkenCanvas: ->
     c = @canvas[0]
@@ -249,13 +249,13 @@ class evroneCrop
       
   done: ->
     tmp_canvas = document.createElement 'canvas'
-    if typeof(window.G_vmlCanvasManager) != 'undefined' 
-      window.G_vmlCanvasManager.initElement(tmp_canvas);
+    #if typeof(window.G_vmlCanvasManager) != 'undefined' 
+    #  window.G_vmlCanvasManager.initElement(tmp_canvas);
     image = @element
     imageCSSW = $(image).width()
     m = @originalSize/imageCSSW
-    if tmp_canvas.getContext
-      ctx = tmp_canvas.getContext '2d'
+    #if tmp_canvas.getContext
+    ctx = tmp_canvas.getContext '2d'
     xywh = @selection.xywh()
 
     xywh.x *= m
