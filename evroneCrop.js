@@ -306,10 +306,15 @@
     evroneCrop.prototype.done = function() {
       var ctx, image, imageCSSW, m, tmp_canvas, xywh;
       tmp_canvas = document.createElement('canvas');
+      if (typeof window.G_vmlCanvasManager !== 'undefined') {
+        window.G_vmlCanvasManager.initElement(tmp_canvas);
+      }
       image = this.element;
       imageCSSW = $(image).width();
       m = this.originalSize / imageCSSW;
-      ctx = tmp_canvas.getContext('2d');
+      if (tmp_canvas.getContext) {
+        ctx = tmp_canvas.getContext('2d');
+      }
       xywh = this.selection.xywh();
       xywh.x *= m;
       xywh.y *= m;
