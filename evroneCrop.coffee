@@ -49,13 +49,17 @@ class evroneCrop
       false
     
   constructCanvas: ->
-    $(@element).after('<canvas class="evroneCropCanvas" style="position: absolute;"></canvas>').next()
+    canvas = document.createElement('canvas')
+    if typeof(window.G_vmlCanvasManager) != 'undefined' 
+      window.G_vmlCanvasManager.initElement(canvas);
+    c = $(canvas)
+    c.css('position', 'absolute')
+    c.addClass 'evroneCropCanvas'
+    $(@element).after(c).next()
       
   setCanvas: ->
      @canvas.offset($(@element).offset()) #set canvas position to left top corner of image
      c = @canvas[0]
-     if typeof(window.G_vmlCanvasManager) != 'undefined' 
-        window.G_vmlCanvasManager.initElement(c);
      c.width = @element.width
      c.height = @element.height
      if c.getContext
@@ -246,7 +250,7 @@ class evroneCrop
   done: ->
     tmp_canvas = document.createElement 'canvas'
     if typeof(window.G_vmlCanvasManager) != 'undefined' 
-        window.G_vmlCanvasManager.initElement(tmp_canvas);
+      window.G_vmlCanvasManager.initElement(tmp_canvas);
     image = @element
     imageCSSW = $(image).width()
     m = @originalSize/imageCSSW
