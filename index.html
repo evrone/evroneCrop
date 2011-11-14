@@ -57,13 +57,14 @@
       $('#demo1').bind('load', function() {
           demo1 = $('#demo1').evroneCrop({
           preview: '#preview1',
-          size: {w: 150, h: 150}
+          size: {w: 150, h: 150},
+          ratio: 1
           });
       });
       $('#demo2').bind('load', function() {
         demo2 = $('#demo2').evroneCrop({
         setSelect: 'center',
-        ratio: 1
+        ratio: 16/9
         });
       });
     });
@@ -92,13 +93,13 @@
 <p>This is a JavaScript crop plugin, based on canvas and written with CoffeeScript. Crop is done completely on client side, the result of crop is a base64 string, that you could easily send to server.
 <br/>      </p>
 <h2>Demo</h2>
-<p>Usage without any settings but preview</p>
+<p>Usage with preview and fixed square ratio</p>
 <div class="images">
   <img src="img1.jpg" alt="Image" id="demo1" />
   <img id="preview1" />
 </div>
 
-<p>Fixed square ratio with default selection in center</p>
+<p>Fixed 16:9 ratio with default selection in center</p>
 <div class="images">
   <img src="img1.jpg" alt="Image" id="demo2" />
 </div>
