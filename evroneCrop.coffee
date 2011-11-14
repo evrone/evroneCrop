@@ -54,6 +54,8 @@ class evroneCrop
   setCanvas: ->
      @canvas.offset($(@element).offset()) #set canvas position to left top corner of image
      c = @canvas[0]
+     if window.G_vmlCanvasManager
+        window.G_vmlCanvasManager.initElement(c);
      c.width = @element.width
      c.height = @element.height
      c.getContext('2d') #return canvas context
