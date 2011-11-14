@@ -8,6 +8,7 @@ $.fn.extend
       setSelect: false #pass coordinates for setting select after initializing, e.g {x: 0, y: 0, w: 100, h: 100} or "center"
       #dont pass h if you have ratio enabled
       size: false
+      log: false
       
     
     settings = $.extend settings, options
@@ -23,11 +24,12 @@ class evroneCrop
     #get original image size
     tmp_img = new Image()
     tmp_img.src = $(@element).attr 'src'
-    @originalSize = tmp_img.width
+    $(tmp_img).bind 'load', () =>
+      @originalSize = tmp_img.width
     
-    @darkenCanvas() #nothing but darken canvas
+      @darkenCanvas() #nothing but darken canvas
     
-    if @settings.setSelect then @setSelect() else @setSelectionTool()
+      if @settings.setSelect then @setSelect() else @setSelectionTool()
     
     
     #########
@@ -254,22 +256,31 @@ class evroneCrop
     image = @element
     imageCSSW = $(image).width()
     m = @originalSize/imageCSSW
+    @log "imageCSSW: #{imageCSSW}"
+    @log "originalSize: #{@originalSize}"
+    @log "m: #{m}"
     #if tmp_canvas.getContext
     ctx = tmp_canvas.getContext '2d'
     xywh = @selection.xywh()
-
-    xywh.x *= m
-    xywh.y *= m
-    xywh.w *= m
-    xywh.h *= m
+    
+    if typeof(m != 'undefined')
+      xywh.x *= m
+      xywh.y *= m
+      xywh.w *= m
+      xywh.h *= m
 
     tmp_canvas.width = @settings.size.w or xywh.w
     tmp_canvas.height = @settings.size.h or xywh.h
+    @log xywh
     ctx.drawImage(image, xywh.x, xywh.y, xywh.w, xywh.h, 0, 0, tmp_canvas.width, tmp_canvas.height)
     tmp_canvas.toDataURL()
     
   store: ->
     $.data(@element, 'evroneCrop', @done())
+    
+  log: (i) ->
+    if @settings.log
+      console.log i
     
       
 class Rect

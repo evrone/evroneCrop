@@ -9,7 +9,8 @@
         preview: false,
         ratio: false,
         setSelect: false,
-        size: false
+        size: false,
+        log: false
       };
       settings = $.extend(settings, options);
       return this.each(function() {
@@ -27,13 +28,15 @@
       this.storePlace = this.settings.store;
       tmp_img = new Image();
       tmp_img.src = $(this.element).attr('src');
-      this.originalSize = tmp_img.width;
-      this.darkenCanvas();
-      if (this.settings.setSelect) {
-        this.setSelect();
-      } else {
-        this.setSelectionTool();
-      }
+      $(tmp_img).bind('load', __bind(function() {
+        this.originalSize = tmp_img.width;
+        this.darkenCanvas();
+        if (this.settings.setSelect) {
+          return this.setSelect();
+        } else {
+          return this.setSelectionTool();
+        }
+      }, this));
       $(this.settings.done).unbind('click');
       $(this.settings.done).click(__bind(function(e) {
         var data;
@@ -309,19 +312,30 @@
       image = this.element;
       imageCSSW = $(image).width();
       m = this.originalSize / imageCSSW;
+      this.log("imageCSSW: " + imageCSSW);
+      this.log("originalSize: " + this.originalSize);
+      this.log("m: " + m);
       ctx = tmp_canvas.getContext('2d');
       xywh = this.selection.xywh();
-      xywh.x *= m;
-      xywh.y *= m;
-      xywh.w *= m;
-      xywh.h *= m;
+      if (typeof (m !== 'undefined')) {
+        xywh.x *= m;
+        xywh.y *= m;
+        xywh.w *= m;
+        xywh.h *= m;
+      }
       tmp_canvas.width = this.settings.size.w || xywh.w;
       tmp_canvas.height = this.settings.size.h || xywh.h;
+      this.log(xywh);
       ctx.drawImage(image, xywh.x, xywh.y, xywh.w, xywh.h, 0, 0, tmp_canvas.width, tmp_canvas.height);
       return tmp_canvas.toDataURL();
     };
     evroneCrop.prototype.store = function() {
       return $.data(this.element, 'evroneCrop', this.done());
+    };
+    evroneCrop.prototype.log = function(i) {
+      if (this.settings.log) {
+        return console.log(i);
+      }
     };
     return evroneCrop;
   })();
