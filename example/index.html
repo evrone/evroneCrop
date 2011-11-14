@@ -1,62 +1,119 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>evroneCrop Demo</title>
-    <style type="text/css" media="screen">
-      body {
-        margin: 0;
-        padding: 0;
-        background: #eee;
-        font-family: Helvetica, Arial, sans-serif;
-        color: #333;
-        font-size: 14px/20px;
-      }
-      img {
-        margin: 0;
-        padding: 0;
-        border: 0;
-      }
-      a {
-        margin: 0;
-        border: 0;
-      }
-      
-      #wrapper {
-        width: 960px;
-        margin: 0 auto;
-        padding: 20px 10px;
-        border-left: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-      }
-      
-      #wrapper .heading {
-        text-align: center;
-      }
-      .images {
-        text-align: center;
-      }
-    </style>
-    <script type="text/javascript" charset="utf-8" src="jquery.js"></script>
-    <script type="text/javascript" charset="utf-8" src="evroneCrop.js"></script>
-    <script type="text/javascript" charset="utf-8">
-      $( function() {
-        crop = $('#test1').evroneCrop({
-          ratio: 1,
-          setSelect: false, 
-          preview: '#preview',
+<head>
+  <meta charset='utf-8'>
+
+  <title>evindor/evroneCrop @ GitHub</title>
+
+  <style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: #eee;
+      font-family: Helvetica, Arial, FreeSans, san-serif;
+      color: #333;
+      padding: 20px 10px;
+    }
+    #container {
+      margin: 0 auto;
+      width: 800px;
+    }
+    .images {
+      text-align: left;
+    }
+    #demo1 {
+      width: 590px;
+      margin-right: 30px;
+    }
+    #preview1 {
+      width: 150px;
+      height: 150px;
+      vertical-align: top;
+      -webkit-box-shadow: #666 0px 2px 3px;
+      -moz-box-shadow: #666 0px 2px 3px;
+      box-shadow: #666 0px 2px 3px;
+    }
+    #demo2 {
+      width: 790px;
+    }
+    
+    h1 { font-size: 3.8em; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1.5em; }
+    h3 { text-align: center; }
+    a { color: #3366dd; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+    pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic;}
+  </style>
+  
+  <script type="text/javascript" charset="utf-8" src="jquery.js"></script>
+  <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+  <script type="text/javascript" charset="utf-8" src="evroneCrop.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $( function() {
+      $('#demo1').bind('load', function() {
+          demo1 = $('#demo1').evroneCrop({
+          preview: '#preview1',
           size: {w: 150, h: 150}
+          });
+      });
+      $('#demo2').bind('load', function() {
+        demo2 = $('#demo2').evroneCrop({
+        setSelect: 'center',
+        ratio: 1
         });
       });
-    </script>
-  </head>
-  <body>
-    <div id="wrapper">
-      <h1 class="heading">evroneCrop Demo</h1>
-      <div class="images">
-        <img src="img1.jpg" alt="Image" id="test1" />
-      </div>
-      <img id="preview" />
+    });
+  </script>
+</head>
+
+<body>
+  <a href="http://github.com/evindor/evroneCrop"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+
+    <div class="download">
+      <a href="http://github.com/evindor/evroneCrop/zipball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+      <a href="http://github.com/evindor/evroneCrop/tarball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
     </div>
-  </body>
+
+    <h1><a href="http://github.com/evindor/evroneCrop">evroneCrop</a>
+      <span class="small">by <a href="http://github.com/evindor">evindor</a></span></h1>
+
+    <div class="description">
+      JS crop tool based on canvas
+    </div>
+
+<p>This is a JavaScript crop plugin, based on canvas and written with CoffeeScript. Crop is done completely on client side, the result of crop is a base64 string, that you could easily send to server.
+<br/>      </p>
+<h2>Demo</h2>
+<p>Usage without any settings but preview</p>
+<div class="images">
+  <img src="img1.jpg" alt="Image" id="demo1" />
+  <img id="preview1" />
+</div>
+
+<p>Fixed square ratio with default selection in center</p>
+<div class="images">
+  <img src="img1.jpg" alt="Image" id="demo2" />
+</div>
+
+<p>Arseny Zarechnev (cyanidesign@gmail.com), Evrone.com
+<br/>      </p>
+
+
+
+    <div class="footer">
+      get the source code on GitHub : <a href="http://github.com/evindor/evroneCrop">evindor/evroneCrop</a>
+    </div>
+
+  </div>
+
+  
+</body>
 </html>
