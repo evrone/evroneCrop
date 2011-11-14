@@ -64,6 +64,9 @@
       var c;
       this.canvas.offset($(this.element).offset());
       c = this.canvas[0];
+      if (window.G_vmlCanvasManager) {
+        window.G_vmlCanvasManager.initElement(c);
+      }
       c.width = this.element.width;
       c.height = this.element.height;
       return c.getContext('2d');
