@@ -64,12 +64,14 @@
       var c;
       this.canvas.offset($(this.element).offset());
       c = this.canvas[0];
-      if (window.G_vmlCanvasManager) {
+      if (typeof window.G_vmlCanvasManager !== 'undefined') {
         window.G_vmlCanvasManager.initElement(c);
       }
       c.width = this.element.width;
       c.height = this.element.height;
-      return c.getContext('2d');
+      if (c.getContext) {
+        return c.getContext('2d');
+      }
     };
     evroneCrop.prototype.darkenCanvas = function() {
       var c;
