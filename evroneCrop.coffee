@@ -237,8 +237,8 @@ class EvroneCrop
     xywh = @selection.xywh()
     
     if typeof(m != 'undefined')
-      for coord in xywh
-        coord *= m 
+      for coord, value in xywh
+        xywh[coord] = value * m 
 
     tmp_canvas.width = @settings.size.w or xywh.w
     tmp_canvas.height = @settings.size.h or xywh.h
