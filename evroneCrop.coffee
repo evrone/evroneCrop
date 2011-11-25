@@ -14,9 +14,9 @@ $.fn.extend
     settings = $.extend settings, options
     
     return @each () ->
-      new evroneCrop this, settings
+      new EvroneCrop this, settings
 
-class evroneCrop
+class EvroneCrop
   constructor: (@element, @settings) ->
     @canvas = @constructCanvas()
     @ctx = @setCanvas()
@@ -26,34 +26,11 @@ class evroneCrop
     tmp_img.src = $(@element).attr 'src'
     $(tmp_img).bind 'load', () =>
       @originalSize = tmp_img.width
-    
       @darkenCanvas() #nothing but darken canvas
-    
       if @settings.setSelect then @setSelect() else @setSelectionTool()
-    
-    
-    #########
-    $(@settings.done).unbind 'click'
-    $(@settings.done).click (e) =>
-      data = 
-        image: @done()
-        id: @settings.userId
-      $.ajax(
-        url: @settings.action
-        data: data
-        type: 'PUT'
-        success: (res) =>
-          if res.success
-            $('#popup').fadeOut(500)
-            if @settings.update
-              $(@settings.update).attr 'src', data.image
-      )
-      false
     
   constructCanvas: ->
     canvas = document.createElement('canvas')
-    #if typeof(window.G_vmlCanvasManager) != 'undefined' 
-    #  window.G_vmlCanvasManager.initElement(canvas);
     c = $(canvas)
     c.css('position', 'absolute')
     c.addClass 'evroneCropCanvas'
@@ -64,7 +41,6 @@ class evroneCrop
      c = @canvas[0]
      c.width = @element.width
      c.height = @element.height
-     #if c.getContext
      c.getContext('2d') #return canvas context
      
   darkenCanvas: ->
@@ -251,23 +227,17 @@ class evroneCrop
       
   done: ->
     tmp_canvas = document.createElement 'canvas'
-    #if typeof(window.G_vmlCanvasManager) != 'undefined' 
-    #  window.G_vmlCanvasManager.initElement(tmp_canvas);
     image = @element
     imageCSSW = $(image).width()
     m = @originalSize/imageCSSW
     @log "imageCSSW: #{imageCSSW}"
     @log "originalSize: #{@originalSize}"
     @log "m: #{m}"
-    #if tmp_canvas.getContext
     ctx = tmp_canvas.getContext '2d'
     xywh = @selection.xywh()
     
     if typeof(m != 'undefined')
-      xywh.x *= m
-      xywh.y *= m
-      xywh.w *= m
-      xywh.h *= m
+      coord *= m for coord in xywh
 
     tmp_canvas.width = @settings.size.w or xywh.w
     tmp_canvas.height = @settings.size.h or xywh.h
@@ -278,9 +248,9 @@ class evroneCrop
   store: ->
     $.data(@element, 'evroneCrop', @done())
     
-  log: (i) ->
+  log: (msg) ->
     if @settings.log
-      console.log i
+      console.log msg
     
       
 class Rect
@@ -312,9 +282,9 @@ class Rect
     else
       false
       
-      
   translate: (i, x, y) ->
     oldSummits = @summits
+    #magic...
     switch i
       when 0
         @summits[0] = {x: x, y: y}

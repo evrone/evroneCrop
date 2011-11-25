@@ -55,15 +55,15 @@
   <script type="text/javascript" charset="utf-8">
     $( function() {
       $('#demo1').bind('load', function() {
-          demo1 = $('#demo1').evroneCrop({
+        $('#demo1').evroneCrop({
           preview: '#preview1',
           size: {w: 150, h: 150}
-          });
+        });
       });
       $('#demo2').bind('load', function() {
-        demo2 = $('#demo2').evroneCrop({
-        setSelect: 'center',
-        ratio: 1
+        $('#demo2').evroneCrop({
+          setSelect: 'center',
+          ratio: 1
         });
       });
     });

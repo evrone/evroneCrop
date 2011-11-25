@@ -1,5 +1,5 @@
 (function() {
-  var $, Rect, evroneCrop;
+  var $, EvroneCrop, Rect;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   $ = jQuery;
   $.fn.extend({
@@ -9,16 +9,17 @@
         preview: false,
         ratio: false,
         setSelect: false,
-        size: false
+        size: false,
+        log: false
       };
       settings = $.extend(settings, options);
       return this.each(function() {
-        return new evroneCrop(this, settings);
+        return new EvroneCrop(this, settings);
       });
     }
   });
-  evroneCrop = (function() {
-    function evroneCrop(element, settings) {
+  EvroneCrop = (function() {
+    function EvroneCrop(element, settings) {
       var tmp_img;
       this.element = element;
       this.settings = settings;
@@ -27,37 +28,17 @@
       this.storePlace = this.settings.store;
       tmp_img = new Image();
       tmp_img.src = $(this.element).attr('src');
-      this.originalSize = tmp_img.width;
-      this.darkenCanvas();
-      if (this.settings.setSelect) {
-        this.setSelect();
-      } else {
-        this.setSelectionTool();
-      }
-      $(this.settings.done).unbind('click');
-      $(this.settings.done).click(__bind(function(e) {
-        var data;
-        data = {
-          image: this.done(),
-          id: this.settings.userId
-        };
-        $.ajax({
-          url: this.settings.action,
-          data: data,
-          type: 'PUT',
-          success: __bind(function(res) {
-            if (res.success) {
-              $('#popup').fadeOut(500);
-              if (this.settings.update) {
-                return $(this.settings.update).attr('src', data.image);
-              }
-            }
-          }, this)
-        });
-        return false;
+      $(tmp_img).bind('load', __bind(function() {
+        this.originalSize = tmp_img.width;
+        this.darkenCanvas();
+        if (this.settings.setSelect) {
+          return this.setSelect();
+        } else {
+          return this.setSelectionTool();
+        }
       }, this));
     }
-    evroneCrop.prototype.constructCanvas = function() {
+    EvroneCrop.prototype.constructCanvas = function() {
       var c, canvas;
       canvas = document.createElement('canvas');
       c = $(canvas);
@@ -65,7 +46,7 @@
       c.addClass('evroneCropCanvas');
       return $(this.element).after(c).next();
     };
-    evroneCrop.prototype.setCanvas = function() {
+    EvroneCrop.prototype.setCanvas = function() {
       var c;
       this.canvas.offset($(this.element).offset());
       c = this.canvas[0];
@@ -73,13 +54,13 @@
       c.height = this.element.height;
       return c.getContext('2d');
     };
-    evroneCrop.prototype.darkenCanvas = function() {
+    EvroneCrop.prototype.darkenCanvas = function() {
       var c;
       c = this.canvas[0];
       this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
       return this.ctx.fillRect(0, 0, c.width, c.height);
     };
-    evroneCrop.prototype.setSelect = function() {
+    EvroneCrop.prototype.setSelect = function() {
       if (this.settings.ratio) {
         if (this.settings.setSelect === 'center') {
           if (this.canvas.width() > this.canvas.height()) {
@@ -118,7 +99,7 @@
       this.store();
       return this.dragMouseDown();
     };
-    evroneCrop.prototype.setSelectionTool = function() {
+    EvroneCrop.prototype.setSelectionTool = function() {
       return this.canvas.mousedown(__bind(function(e) {
         var coords, dragMouseMove, dragMouseUp;
         coords = {
@@ -163,7 +144,7 @@
         }, this);
       }, this));
     };
-    evroneCrop.prototype.updateCanvas = function(x, y, w, h, canvas, ctx) {
+    EvroneCrop.prototype.updateCanvas = function(x, y, w, h, canvas, ctx) {
       var c;
       c = canvas[0];
       ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
@@ -175,7 +156,7 @@
       }
       return window[this.store] = this.done();
     };
-    evroneCrop.prototype.createCorners = function() {
+    EvroneCrop.prototype.createCorners = function() {
       var c, ctx, point, r, _i, _len, _ref, _results;
       c = this.canvas[0];
       ctx = this.ctx;
@@ -194,13 +175,13 @@
       }
       return _results;
     };
-    evroneCrop.prototype.updateInits = function() {
+    EvroneCrop.prototype.updateInits = function() {
       this.initX = this.selection.xywh.x;
       this.initY = this.selection.xywh.y;
       this.moveW = this.selection.xywh.w;
       return this.moveH = this.selection.xywh.h;
     };
-    evroneCrop.prototype.dragMouseDown = function() {
+    EvroneCrop.prototype.dragMouseDown = function() {
       return this.canvas.mousedown(__bind(function(e) {
         var coords, corner, dragMouseMove, dragMouseUp, i, resizeMouseMove, resizeMouseUp, summit, _i, _len, _ref, _results;
         coords = {
@@ -303,27 +284,38 @@
         }
       }, this));
     };
-    evroneCrop.prototype.done = function() {
-      var ctx, image, imageCSSW, m, tmp_canvas, xywh;
+    EvroneCrop.prototype.done = function() {
+      var coord, ctx, image, imageCSSW, m, tmp_canvas, xywh, _i, _len;
       tmp_canvas = document.createElement('canvas');
       image = this.element;
       imageCSSW = $(image).width();
       m = this.originalSize / imageCSSW;
+      this.log("imageCSSW: " + imageCSSW);
+      this.log("originalSize: " + this.originalSize);
+      this.log("m: " + m);
       ctx = tmp_canvas.getContext('2d');
       xywh = this.selection.xywh();
-      xywh.x *= m;
-      xywh.y *= m;
-      xywh.w *= m;
-      xywh.h *= m;
+      if (typeof (m !== 'undefined')) {
+        for (_i = 0, _len = xywh.length; _i < _len; _i++) {
+          coord = xywh[_i];
+          coord *= m;
+        }
+      }
       tmp_canvas.width = this.settings.size.w || xywh.w;
       tmp_canvas.height = this.settings.size.h || xywh.h;
+      this.log(xywh);
       ctx.drawImage(image, xywh.x, xywh.y, xywh.w, xywh.h, 0, 0, tmp_canvas.width, tmp_canvas.height);
       return tmp_canvas.toDataURL();
     };
-    evroneCrop.prototype.store = function() {
+    EvroneCrop.prototype.store = function() {
       return $.data(this.element, 'evroneCrop', this.done());
     };
-    return evroneCrop;
+    EvroneCrop.prototype.log = function(msg) {
+      if (this.settings.log) {
+        return console.log(msg);
+      }
+    };
+    return EvroneCrop;
   })();
   Rect = (function() {
     function Rect(x, y, w, h, padding) {
