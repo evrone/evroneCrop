@@ -237,10 +237,10 @@ class EvroneCrop
     xywh = @selection.xywh()
     
     if typeof(m != 'undefined')
-      xywh.x =* m
-      xywh.y =* m
-      xywh.w =* m
-      xywh.h =* m
+      xywh.x *= m
+      xywh.y *= m
+      xywh.w *= m
+      xywh.h *= m
 
     tmp_canvas.width = @settings.size.w or xywh.w
     tmp_canvas.height = @settings.size.h or xywh.h

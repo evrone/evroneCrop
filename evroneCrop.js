@@ -285,7 +285,7 @@
       }, this));
     };
     EvroneCrop.prototype.done = function() {
-      var coord, ctx, image, imageCSSW, m, tmp_canvas, value, xywh, _len;
+      var ctx, image, imageCSSW, m, tmp_canvas, xywh;
       tmp_canvas = document.createElement('canvas');
       image = this.element;
       imageCSSW = $(image).width();
@@ -296,10 +296,10 @@
       ctx = tmp_canvas.getContext('2d');
       xywh = this.selection.xywh();
       if (typeof (m !== 'undefined')) {
-        for (value = 0, _len = xywh.length; value < _len; value++) {
-          coord = xywh[value];
-          xywh[coord] = value * m;
-        }
+        xywh.x *= m;
+        xywh.y *= m;
+        xywh.w *= m;
+        xywh.h *= m;
       }
       tmp_canvas.width = this.settings.size.w || xywh.w;
       tmp_canvas.height = this.settings.size.h || xywh.h;
