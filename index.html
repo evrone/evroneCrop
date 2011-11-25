@@ -55,16 +55,16 @@
   <script type="text/javascript" charset="utf-8">
     $( function() {
       $('#demo1').bind('load', function() {
-          demo1 = $('#demo1').evroneCrop({
+        $('#demo1').evroneCrop({
           preview: '#preview1',
           size: {w: 150, h: 150},
           ratio: 1
-          });
+        });
       });
       $('#demo2').bind('load', function() {
-        demo2 = $('#demo2').evroneCrop({
-        setSelect: 'center',
-        ratio: 16/9
+        $('#demo2').evroneCrop({
+          setSelect: 'center',
+          ratio: 16/9
         });
       });
     });
@@ -104,7 +104,7 @@
   <img src="img1.jpg" alt="Image" id="demo2" />
 </div>
 
-<p>Arseny Zarechnev (cyanidesign@gmail.com), Evrone.com
+<p>Arseny Zarechnev (cyanidesign@gmail.com), <a href="http://evrone.com">Evrone.com</a>
 <br/>      </p>
 
 
