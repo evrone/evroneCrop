@@ -1,8 +1,8 @@
-#evroneCrop
+# evroneCrop
 
 This is a JavaScript crop plugin, based on canvas and written with CoffeeScript. Crop is done completely on client side, the result of crop is a base64 string, that you could easily send to server.
 
-##Usage
+## Usage
 
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="evroneCrop.js"></script>
